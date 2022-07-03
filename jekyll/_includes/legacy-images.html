@@ -1,0 +1,169 @@
+<style>
+
+  #legacy-images-search {
+    display: flex;
+    max-height: 600px;
+    overflow: auto;
+    border: 1px solid lightgrey;
+  }
+
+  .image-picker {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    flex: 1;
+  }
+
+  .image {
+    border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 8px 8px 8px 16px;
+  }
+
+  .list-container {
+    max-height: 600px;
+    overflow: auto;
+  }
+
+  .search-wrap {
+
+  }
+
+  .selected {
+    background: #04AA51;
+    color: white;
+  }
+
+  .tags {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    border-left: 1px solid lightgrey;
+    max-height: 600px;
+    overflow: auto;
+  }
+
+  .tag {
+    padding: 4px 16px;
+  }
+
+  .tag-alternating {
+    background: #eee;
+  }
+
+
+
+  .search {
+    padding: 8px;
+    border-bottom: 1px solid lightgrey;
+    display: flex;
+    align-items: center;
+  }
+
+  .close-icon {
+    cursor: pointer;
+    padding: 0 4px;
+  }
+
+  .search-box {
+    width: 100%;
+    border: none;
+    padding: 8px;
+    outline: none;
+  }
+
+  .tab-box {
+    background: light-blue;
+    overflow: scroll;
+  }
+</style>
+
+{% raw %}
+<div id="legacy-images-search">
+  <div class="image-picker">
+    <div class="search">
+      <input class="search-box" v-model="imageFilter" placeholder="Search Images..." />
+      <i v-show="imageFilter" v-on:click="clearImageFilter" class="close-icon fa fa-times-circle"/>
+    </div>
+    <div class="list-container">
+      <div v-for="(lang, tags, index) in filteredImages">
+        <div class="image"  v-bind:class="{selected: lang === selectedLang}" v-on:click="selectLang(lang)">
+          {{ lang }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tags">
+    <div class="search">
+      <input class="search-box" v-model="tagFilter" v-bind:placeholder="tagInputPlaceholder" />
+      <i v-show="tagFilter" v-on:click="clearTagFilter" class="close-icon fa fa-times-circle"/>
+    </div>
+    <div class="list-container">
+      <div v-for="(tag, index) in filteredTags">
+        <div class="tag" v-bind:class="{'tag-alternating': index % 2}">
+          {{tag}}
+        </div>
+      </div>
+    </div>
+
+</div>
+{% endraw %}
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+<script>
+  var raw_images = JSON.parse(decodeURIComponent("{{include.images | jsonify | uri_escape}}"))
+  var images = {}
+  raw_images.forEach(function(img) {
+    images[img[1].name] = img[1].tags
+  })
+  window.__convenienceImages = images
+
+  var app = new Vue({
+    el: '#legacy-images-search',
+    data: {
+      images: window.__convenienceImages,
+      selectedLang: "Android",
+      imageFilter: "",
+      tagFilter: ""
+    },
+    methods: {
+      selectLang: function(e) {
+        this.selectedLang = e;
+        this.tagFilter = "";
+      },
+
+      isSelected: function(currLang) {
+        return currLang === this.selectedLang
+      },
+      clearImageFilter: function() {this.imageFilter = ""},
+      clearTagFilter:   function() {this.tagFilter = ""}
+    },
+    computed: {
+
+      tagInputPlaceholder: function() {
+        return "Search " + this.selectedLang + " tags..."
+      },
+
+      getTags: function() {
+        return this.images[this.selectedLang]
+
+      },
+
+      filteredImages() {
+        return Object.keys(this.images).filter(image => {
+          return image.toLowerCase().includes(this.imageFilter.toLowerCase())
+        })
+      },
+
+      filteredTags() {
+        return this.getTags.filter(tag => {
+          return tag.toLowerCase().includes(this.tagFilter.toLowerCase())
+        })
+      },
+    }
+  })
+
+</script>
