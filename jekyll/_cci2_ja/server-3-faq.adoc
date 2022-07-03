@@ -1,0 +1,25 @@
+---
+version:
+- Server v3.x
+- サーバー管理
+---
+= CircleCI Server v3.x に関するよくあるご質問
+:page-layout: classic-docs
+:page-liquid:
+:icons: font
+:toc: macro
+:toc-title:
+
+toc::[]
+
+## CircleCI Server 3.0 に、データ保持ポリシーは定められていますか？
+現在、CircleCI ではデータ保持ポリシーは定めていません。 データは CircleCI Server 上に無期限に保存されます。
+
+## Nomad の証明書に対するアクセス権は、どのようなものが付与されますか？
+Nomad の mTLS まで、証明書のフルアクセス権が付与されます。
+
+## 実効状態をチェックするポーリングについて、時間を変更したり、無効にしたりすることはできますか？
+いいえ。ポーリングのカスタマイズはできません。
+
+## KOTS のアプリケーション状態オプションとはどのようなものですか？
+https://kots.io/vendor/config/application-status/#resource-statuses[KOTS のドキュメント]を参照してください。
