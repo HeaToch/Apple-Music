@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+{% include_cached head.html site=site page=page %}
+<body class="{% if page.page-type == "index" or page.page-type == "homepage" %}homepage{% endif %}">
+{% if jekyll.environment == "production" %}
+  {% include_cached google-tag-manager.html %}
+{% endif %}
+
+<div class="outer">
+  {% include_cached global-nav.html %}
+  {% include_cached main-searchbar.html %}
+  {% include_cached mobile-sidebar.html %}
+  <!-- instant hit template container /-->
+  <div id="hits-target" style="display:none;">
+    <div class="container-semi-fluid">
+          <div id="subnav-placeholder">
+            <div class="component subnav dynamic-fixed" data-top-nav-offset="120">
+              <ul class="results-nav" role="tablist">
+                <li role="presentation" class="active">
+                  <a role="tab" data-toggle="tab" aria-controls="search-results-documentation" href="#search-results-documentation">
+                    <span class="hidden-xs">Documentation</span>
+                    <span class="visible-xs-inline">Docs</span>
+                    <span class="hits-count">(<span class="hits-count-docs">0</span>)</span>
+                  </a>
+                </li>
+                <li role="presentation">
+                  <a role="tab" data-toggle="tab" aria-controls="search-results-orbs" href="#search-results-orbs">
+                    Orbs
+                    <span class="hits-count">(<span class="hits-count-orbs">0</span>)</span>
+                  </a>
+                </li>
+                <li role="presentation">
+                  <a role="tab" data-toggle="tab" aria-controls="search-results-cimgs" href="#search-results-cimgs">
+                    <span class="hidden-xs">Convenience Images</span>
+                    <span class="visible-xs-inline">Images</span>
+                    <span class="hits-count">(<span class="hits-count-cimgs">0</span>)</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="search-results-documentation">
+              <div id="instant-hits"></div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="search-results-orbs">
+              <div id="instant-hits-orbs"></div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="search-results-cimgs">
+              <div id="instant-hits-cimgs"></div>
+            </div>
+          </div>
+    </div>
+  </div>
+  <div class="main-body">
+    {% assign lang = page.lang %}
+    {% assign sidenav = site.data.sidenav[lang] %}
+    {% assign current_url = page.url | slice: 1, page.url.size %}
+    {% include_cached sidebar.html lang=lang sidenav=sidenav current_url=current_url%}
+    <div class="article-container docs" id="main">
+      {% if page.collection == "ccie" %}{% include_cached v2-banner.html %}{% endif %}
+      {% if page.collection == "cci1" %}{% include_cached v2-dev-banner.html %}{% endif %}
+      {% if page.page-type == "index" %}<h2>{{ page.title }}</h2>{% endif %}
+
+
+      <article>
+        <!-- Title and version badges: -->
+        <div>
+          {% if page.page-type != "index" and page.page-type != "homepage" %}<h1 id="{{ page.title | downcase | split: " " | join: "-" }}">{{ page.title }}</h1>{% endif %}
+        </div>
+        {% if page.version %}
+        <div class="server-version-wrapper">
+          <div id="tooltip" role="tooltip" class="server-version-popover">
+            This document is applicable to the following:
+            <div id="arrow" data-popper-arrow></div>
+          </div>
+          {% for version in page.version %}
+          <span class="badge badge-primary">
+            <button class="server-version-badge" aria-describedby="tooltip">{{ version }}</button>
+            <!-- <img src="{{ site.baseurl }}/assets/img/docs/{{ version }}-badge.png" height="24">  -->
+          </span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% if page.untranslated %}
+          {% include_cached translation_in_progress.html site=site page=page %}
+        {% endif %}
+        {{ content }}
+        {% if page.collection != 'cci1' and page.page-type != "index" and page.layout == "classic-docs" or page.layout == "enterprise" %}
+          {% include_cached doc-footer.html page=page site=site %}
+        {% endif %}
+      </article>
+    </div><!-- .article-container -->
+  </div><!-- .main-body -->
+
+  {% include_localized global-footer.html %}
+  {% include_cached js-config.html site=site page=page %}
+  {% include_cached js-assets.html %}
+</div><!-- .outter -->
+</body>
+</html>
