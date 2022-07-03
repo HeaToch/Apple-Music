@@ -1,0 +1,117 @@
+# CircleCI 1.0 Docs
+
+# REQUIRED
+# corresponds to Jekyll collection
+- section: cci1
+  # REQUIRED
+  # filename of category's page: "_collection/<slug>.md"
+  # lowercase, no spaces, unique within section
+  slug: getting-started
+  # REQUIRED
+  # human-readable slug / display name for website
+  name: "Getting Started"
+  # OPTIONAL
+  # filename of category
+  # alternate for category slug, "_collection/<index>.md"
+  # used only in cci1 docs
+  index: gettingstarted
+  # OPTIONAL
+  # filename for icon, located at "/assets/img/icons/<icon>"
+  # used only in cci1 docs
+  icon: "gettingstarted.svg"
+
+- section: cci1
+  slug: migration
+  name: "Migration"
+
+- section: cci1
+  slug: build-images
+  name: "Build Environments"
+  icon: "build-images.svg"
+  
+- section: cci1
+  slug: languages
+  name: "Language Guides"
+  icon: "languages.svg"    
+  
+- section: cci1
+  slug: configuration-tasks
+  name: "Configuration"  
+  
+- section: cci1
+  slug: parallelism
+  name: "Optimization"
+  icon: "parallelism.svg"
+
+- section: cci1
+  slug: how-to
+  name: "Integrations"
+  icon: "how-to.svg"
+
+- section: cci1
+  slug: reference
+  name: "Reference"
+  icon: "reference.svg"
+  
+- section: cci1
+  slug: troubleshooting
+  name: "Troubleshooting"
+  icon: "troubleshooting.svg"  
+
+- section: ccie
+  slug: advanced-config
+  name: "Legacy 1.0 Configuration"
+
+- section: ccie
+  slug: troubleshooting
+  name: "Legacy 1.0 Troubleshooting"
+
+- section: ccie
+  slug: resources
+  name: "Legacy 1.0 Reference"
+
+# CircleCI 2.0 Docs
+- section: cci2
+  slug: getting-started
+  name: "Getting Started"
+  
+- section: cci2
+  slug: migration
+  name: "Migration"
+  
+- section: cci2
+  slug: platforms
+  name: "Platforms"
+
+- section: cci2
+  slug: containerization
+  name: "Containerization"
+
+- section: cci2
+  slug: configuring-jobs
+  name: "Configuration"
+
+- section: cci2
+  slug: optimization
+  name: "Optimization"
+
+- section: cci2
+  slug: deploying
+  name: "Deployment"
+
+- section: cci2
+  slug: troubleshooting
+  name: "Troubleshooting"
+
+- section: cci2
+  slug: language-guides
+  name: "Language Guides"
+
+- section: cci2
+  slug: reference
+  name: "Reference"
+
+# CircleCI API Docs
+- section: api
+  slug: reference
+  name: "API Reference"
